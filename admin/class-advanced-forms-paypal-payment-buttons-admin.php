@@ -85,344 +85,278 @@ class Advanced_Forms_Paypal_Payment_Buttons_Admin {
 		return;
 
 	}
+
+	/**
+	 * Add an options page under the Settings submenu using ACF options page functionality
+	 *
+	 * @since 1.1.0
+	 */
+	public function af_ppb_add_options_page() {
 	
-	/**
-	 * Add an options page under the Settings submenu
-	 *
-	 * @since 1.0.0
-	 */
-	public function af_ppb_add_submenu_page() {
-
-		// add_submenu_page( $parent_slug, $page_title, $menu_title, $capability, $menu_slug, $function = '' )
-		$this->plugin_screen_hook_suffix = add_submenu_page(
-			'edit.php?post_type=af_form',
-			__( 'PayPal Settings', $this->plugin_name ),
-			__( 'PayPal Settings', $this->plugin_name ),
-			'edit_pages',
-			$this->option_name,
-			array( $this, 'af_ppb_display_submenu_page' )
-		);
-
-	}
-	
-	/**
-	 * Render the submenu page for plugin
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_display_submenu_page() {
-	
-		include_once 'partials/advanced-forms-paypal-payment-buttons-admin-display.php';
-	}
-	
-	/**
-	 * Register settings
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_register_settings() {
-	
-		// add_settings_section( $id, $title, $callback, $page )
-		add_settings_section(
-			$this->option_name . '_accounts',
-			__( 'PayPal Accounts', $this->plugin_name ),
-			array( $this, $this->option_name . '_accounts_render' ),
-			$this->option_name
-		);	
-
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_accounts_live_account',
-			__( 'Live Account', $this->plugin_name ),
-			array( $this, $this->option_name . '_accounts_live_account_render' ),
-			$this->option_name,
-			$this->option_name . '_accounts',
-			array( 'label_for' => $this->option_name . '_accounts_live_account' )
-		);	
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_accounts_live_account', 
-			'sanitize_text_field' 
-		);
+		// Register options page
+		acf_add_options_page( array(
+			'page_title'  => 'Advanced Form PayPal Payment Buttons Settings',
+			'menu_title'  => 'PayPal Settings',
+			'menu_slug'   => 'af_ppb',
+			'capability'  => 'edit_pages',
+			'parent_slug' => 'edit.php?post_type=af_form',
+		) );
+			
+		// Register field group
+		acf_add_local_field_group(array (
+			'key' => 'group_af_ppb_options',
+			'title' => 'PayPal Settings',
+			'fields' => array (
+				array (
+					'key' => 'field_af_ppb_accounts_tab',
+					'label' => '<span class="dashicons dashicons-id"></span>Accounts',
+					'name' => '',
+					'type' => 'tab',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'placement' => 'left',
+					'endpoint' => 0,
+				),
+				array (
+					'key' => 'field_af_ppb_accounts_message',
+					'label' => 'PayPal Accounts',
+					'name' => '',
+					'type' => 'message',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'message' => 'Enter the PayPal email addresses or merchant IDs for live and sandbox.',
+					'new_lines' => '',
+					'esc_html' => 0,
+				),
+				array (
+					'key' => 'field_af_ppb_accounts_live_account',
+					'label' => 'Live Account',
+					'name' => 'af_ppb_accounts_live_account',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_accounts_sandbox_account',
+					'label' => 'Sandbox Account',
+					'name' => 'af_ppb_accounts_sandbox_account',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_tab',
+					'label' => '<span class="dashicons dashicons-lock"></span>Encryption',
+					'name' => '',
+					'type' => 'tab',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'placement' => 'left',
+					'endpoint' => 0,
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_message',
+					'label' => 'PayPal Button Encryption',
+					'name' => '',
+					'type' => 'message',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'message' => 'In order to encrypt PayPal payment buttons, you must be able to generate a private key and X.509 public certificate using OpenSSL.	You must upload the public certificate to PayPal and take note of the certificate ID to enter here. You must then download the PayPal public certificate for both the live system and the sandbox. The certifcates and key must be stored securely in a directory on the webserver outside of the WordPress directory and web root (they must not be publically accessible). You must also have access to a temporary directory outside of the web root in order for temporary files to be written and then removed during the process of encryption. The documentation for how to implement this is <a target="_blank" href="https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/encryptedwebpayments/#id08A3I0QC0X4">here</a> - see <strong>Using EWP to Protect Manually Created Payment Buttons</strong>.',
+					'new_lines' => '',
+					'esc_html' => 0,
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_merchant_public_certificate_id_live',
+					'label' => 'Merchant Public Certificate ID (Live)',
+					'name' => 'af_ppb_encryption_merchant_public_certificate_id_live',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_merchant_public_certificate_id_sandbox',
+					'label' => 'Merchant Public Certificate ID (Sandbox)',
+					'name' => 'af_ppb_encryption_merchant_public_certificate_id_sandbox',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_merchant_public_certificate',
+					'label' => 'Merchant Public Certificate File',
+					'name' => 'af_ppb_encryption_merchant_public_certificate',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_merchant_private_key',
+					'label' => 'Merchant Private Key File',
+					'name' => 'af_ppb_encryption_merchant_private_key',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_paypal_public_certificate_live',
+					'label' => 'PayPal Public Certificate File (Live)',
+					'name' => 'af_ppb_encryption_paypal_public_certificate_live',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+				array (
+					'key' => 'field_af_ppb_encryption_paypal_public_certificate_sandbox',
+					'label' => 'PayPal Public Certificate File (Sandbox)',
+					'name' => 'af_ppb_encryption_paypal_public_certificate_sandbox',
+					'type' => 'text',
+					'instructions' => '',
+					'required' => 0,
+					'conditional_logic' => 0,
+					'wrapper' => array (
+						'width' => '',
+						'class' => '',
+						'id' => '',
+					),
+					'hide_admin' => 0,
+					'default_value' => '',
+					'placeholder' => '',
+					'prepend' => '',
+					'append' => '',
+					'maxlength' => '',
+				),
+			),
+			'location' => array (
+				array (
+					array (
+						'param' => 'options_page',
+						'operator' => '==',
+						'value' => 'af_ppb',
+					),
+				),
+			),
+			'menu_order' => 0,
+			'position' => 'normal',
+			'style' => 'default',
+			'label_placement' => 'top',
+			'instruction_placement' => 'label',
+			'hide_on_screen' => '',
+			'active' => 1,
+			'description' => '',
+		));
 		
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_accounts_sandbox_account',
-			__( 'Sandbox Account', $this->plugin_name ),
-			array( $this, $this->option_name . '_accounts_sandbox_account_render' ),
-			$this->option_name,
-			$this->option_name . '_accounts',
-			array( 'label_for' => $this->option_name . '_accounts_sandbox_account' )
-		);	
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_accounts_sandbox_account', 
-			'sanitize_text_field' 
-		);
-		
-		// add_settings_section( $id, $title, $callback, $page )
-		add_settings_section(
-			$this->option_name . '_encryption',
-			__( 'PayPal Button Encryption', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_render' ),
-			$this->option_name
-		);	
-
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_merchant_public_certificate_id_live',
-			__( 'Merchant Public Certificate ID (Live)', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_merchant_public_certificate_id_live_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_merchant_public_certificate_id_live' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_merchant_public_certificate_id_live', 
-			'sanitize_text_field' 
-		);
-
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_merchant_public_certificate_id_sandbox',
-			__( 'Merchant Public Certificate ID (Sandbox)', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_merchant_public_certificate_id_sandbox_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_merchant_public_certificate_id_sandbox' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_merchant_public_certificate_id_sandbox', 
-			'sanitize_text_field' 
-		);
-		
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_merchant_public_certificate',
-			__( 'Merchant Public Certificate File', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_merchant_public_certificate_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_merchant_public_certificate' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_merchant_public_certificate', 
-			'sanitize_text_field' 
-		);
-
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_merchant_private_key',
-			__( 'Merchant Private Key File', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_merchant_private_key_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_merchant_private_key' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_merchant_private_key', 
-			'sanitize_text_field' 
-		);		
-		
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_paypal_public_certificate_live',
-			__( 'PayPal Public Certificate File (Live)', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_paypal_public_certificate_live_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_paypal_public_certificate_live' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_paypal_public_certificate_live', 
-			'sanitize_text_field' 
-		);		
-
-		// add_settings_field( $id, $title, $callback, $page, $section, $args )
-		add_settings_field(
-			$this->option_name . '_encryption_paypal_public_certificate_sandbox',
-			__( 'PayPal Public Certificate File (Sandbox)', $this->plugin_name ),
-			array( $this, $this->option_name . '_encryption_paypal_public_certificate_sandbox_render' ),
-			$this->option_name,
-			$this->option_name . '_encryption',
-			array( 'label_for' => $this->option_name . '_encryption_paypal_public_certificate_sandbox' )
-		);
-
-		// register_setting( $option_group, $option_name, $sanitize_callback )
-		register_setting( 
-			$this->option_name, 
-			$this->option_name . '_encryption_paypal_public_certificate_sandbox', 
-			'sanitize_text_field' 
-		);
-
-	}
-
-	/**
-	 * Render the text for the accounts section
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_accounts_render() {
-
-		echo '<p>' . __( 'Enter the PayPal email addresses or merchant IDs for live and sandbox.', $this->plugin_name ) . '</p>';
-		
-	}	
-
-	/**
-	 * Render the accounts_live_account field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_accounts_live_account_render() {
-
-		$option_value = get_option( $this->option_name . '_accounts_live_account' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_accounts_live_account' . '" id="' .
-			$this->option_name . '_accounts_live_account' . 
-			'" value="' . $option_value . '" class="regular-text">';
-
-	}	
-
-	/**
-	 * Render the accounts_sandbox_account field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_accounts_sandbox_account_render() {
-
-		$option_value = get_option( $this->option_name . '_accounts_sandbox_account' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_accounts_sandbox_account' . '" id="' .
-			$this->option_name . '_accounts_sandbox_account' . 
-			'" value="' . $option_value . '" class="regular-text">';
-
-	}	
-	
-	/**
-	 * Render the text for the encryption settings section
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_render() {
-
-		echo '<p>' . __( 'In order to encrypt PayPal payment buttons, you must be able to generate a private key and X.509 public certificate
-			using OpenSSL.  You must upload the public certificate to PayPal and take note of the certificate ID to enter here. You must then
-			download the PayPal public certificate for both the live system and the sandbox. The certifcates and key must be stored securely 
-			in a directory on the webserver outside of the WordPress directory and web root (they must not be publically accessible). You must
-			also have access to a temporary directory outside of the web root in order for temporary files to be written and then removed during
-			the process of encryption. The documentation for how to implement this is 
-			<a target="_blank" href="https://developer.paypal.com/docs/classic/paypal-payments-standard/integration-guide/encryptedwebpayments/#id08A3I0QC0X4">
-			here</a> - see <strong>Using EWP to Protect Manually Created Payment Buttons</strong>.', $this->plugin_name ) . '</p>';
-		
-	}	
-
-	/**
-	 * Render the encryption_merchant_public_certificate_id_live field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_merchant_public_certificate_id_live_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_merchant_public_certificate_id_live' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_merchant_public_certificate_id_live' . '" id="' .
-			$this->option_name . '_encryption_merchant_public_certificate_id_live' . 
-			'" value="' . $option_value . '" class="regular-text">';
-
-	}
-
-	/**
-	 * Render the encryption_merchant_public_certificate_id_sandbox field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_merchant_public_certificate_id_sandbox_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_merchant_public_certificate_id_sandbox' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_merchant_public_certificate_id_sandbox' . '" id="' .
-			$this->option_name . '_encryption_merchant_public_certificate_id_sandbox' . 
-			'" value="' . $option_value . '" class="regular-text">';
-
-	}
-
-	/**
-	 * Render the encryption_merchant_public_certificate field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_merchant_public_certificate_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_merchant_public_certificate' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_merchant_public_certificate' . '" id="' .
-			$this->option_name . '_encryption_merchant_public_certificate' . 
-			'" value="' . $option_value . '" class="large-text">';
-
-	}
-
-	/**
-	 * Render the encryption_merchant_private_key field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_merchant_private_key_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_merchant_private_key' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_merchant_private_key' . '" id="' .
-			$this->option_name . '_encryption_merchant_private_key' . 
-			'" value="' . $option_value . '" class="large-text">';
-
-	}
-
-	/**
-	 * Render the encryption_paypal_public_certificate_live field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_paypal_public_certificate_live_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_paypal_public_certificate_live' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_paypal_public_certificate_live' . '" id="' .
-			$this->option_name . '_encryption_paypal_public_certificate_live' . 
-			'" value="' . $option_value . '" class="large-text">';
-
-	}
-	
-	/**
-	 * Render the encryption_paypal_public_certificate_sandbox field
-	 *
-	 * @since  1.0.0
-	 */
-	public function af_ppb_encryption_paypal_public_certificate_sandbox_render() {
-
-		$option_value = get_option( $this->option_name . '_encryption_paypal_public_certificate_sandbox' );
-		
-		echo '<input type="text" name="' . $this->option_name . '_encryption_paypal_public_certificate_sandbox' . '" id="' .
-			$this->option_name . '_encryption_paypal_public_certificate_sandbox' . 
-			'" value="' . $option_value . '" class="large-text">';
-
 	}
 
 	/**

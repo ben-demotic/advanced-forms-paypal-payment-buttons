@@ -139,11 +139,11 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 			
 			if( 'live' == $mode ) {
 				$path = 'https://www.paypal.com/cgi-bin/webscr';
-				$af_ppb_variables['business'] = get_option( 'af_ppb_accounts_live_account' );
+				$af_ppb_variables['business'] = get_field( 'field_af_ppb_accounts_live_account', 'option' );
 			}
 			else {
 				$path = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
-				$af_ppb_variables['business'] = get_option( 'af_ppb_accounts_sandbox_account' );
+				$af_ppb_variables['business'] = get_field( 'field_af_ppb_accounts_sandbox_account', 'option' );
 			}
 			
 			if ( 'on' == get_field( 'field_af_ppb_button_encryption', $form_id ) ) {
@@ -193,16 +193,16 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 		$error = new WP_Error();
 
 		if( 'live' == $mode ) {
-			$af_ppb_variables['cert_id'] = get_option( 'af_ppb_encryption_merchant_public_certificate_id_live' );
-			$paypal_cert = 'file://' . get_option( 'af_ppb_encryption_paypal_public_certificate_live' );
+			$af_ppb_variables['cert_id'] = get_field( 'field_af_ppb_encryption_merchant_public_certificate_id_live', 'option' );
+			$paypal_cert = 'file://' . get_field( 'field_af_ppb_encryption_paypal_public_certificate_live', 'option' );
 		}
 		else {
-			$af_ppb_variables['cert_id'] = get_option( 'af_ppb_encryption_merchant_public_certificate_id_sandbox' );
-			$paypal_cert = 'file://' . get_option( 'af_ppb_encryption_paypal_public_certificate_sandbox' );
+			$af_ppb_variables['cert_id'] = get_field( 'field_af_ppb_encryption_merchant_public_certificate_id_sandbox', 'option' );
+			$paypal_cert = 'file://' . get_field( 'field_af_ppb_encryption_paypal_public_certificate_sandbox', 'option' );
 		}
 		
-		$merchant_cert = 'file://' . get_option( 'af_ppb_encryption_merchant_public_certificate' );
-		$merchant_key = 'file://' . get_option( 'af_ppb_encryption_merchant_private_key' );
+		$merchant_cert = 'file://' . get_field( 'field_af_ppb_encryption_merchant_public_certificate', 'option' );
+		$merchant_key = 'file://' . get_field( 'field_af_ppb_encryption_merchant_private_key', 'option' );
 		
 		if( !file_exists( $paypal_cert ) || !file_exists( $merchant_cert ) || !file_exists( $merchant_key ) ) { 
 			$error->add( 'af_ppb_error_enc1', __( 'Missing certificate files.', $this->plugin_name ) );

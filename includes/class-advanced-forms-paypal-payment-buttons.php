@@ -157,8 +157,7 @@ class Advanced_Forms_Paypal_Payment_Buttons {
 		$plugin_admin = new Advanced_Forms_Paypal_Payment_Buttons_Admin( $this->get_plugin_name(), $this->get_version() );
 
 		$this->loader->add_action( 'admin_notices', $plugin_admin, 'af_ppb_check_dependencies', 10, 0 );
-		$this->loader->add_action( 'admin_menu', $plugin_admin, 'af_ppb_add_submenu_page' );
-		$this->loader->add_action( 'admin_init', $plugin_admin, 'af_ppb_register_settings' );
+		$this->loader->add_action( 'acf/init', $plugin_admin, 'af_ppb_add_options_page' );
 		$this->loader->add_filter( 'af/form/settings_fields', $plugin_admin, 'af_ppb_add_form_settings_fields', 20, 1 );
 		$this->loader->add_action( 'acf/render_field/type=text', $plugin_admin, 'af_ppb_add_form_field_inserter', 20, 1 );
 	
