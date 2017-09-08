@@ -95,7 +95,7 @@ class Advanced_Forms_Paypal_Payment_Buttons_Admin {
 	
 		// Register options page
 		acf_add_options_page( array(
-			'page_title'  => 'Advanced Form PayPal Payment Buttons Settings',
+			'page_title'  => 'Advanced Forms PayPal Payment Buttons Settings',
 			'menu_title'  => 'PayPal Settings',
 			'menu_slug'   => 'af_ppb',
 			'capability'  => 'edit_pages',
@@ -426,6 +426,43 @@ class Advanced_Forms_Paypal_Payment_Buttons_Admin {
 			),
 			'default_value' => array (
 				0 => 'none',
+			),
+			'allow_null' => 0,
+			'multiple' => 0,
+			'ui' => 0,
+			'ajax' => 0,
+			'return_format' => 'value',
+			'placeholder' => '',
+		);
+
+		$field_group['fields'][] = array (
+			'key' => 'field_af_ppb_button_image',
+			'label' => 'Button Image',
+			'name' => 'af_ppb_button_image',
+			'type' => 'select',
+			'instructions' => '',
+			'required' => 0,
+			'conditional_logic' => array (
+				array (
+					array (
+						'field' => 'field_af_ppb_button_type',
+						'operator' => '==',
+						'value' => '_xclick',
+					),
+				),
+			),
+			'wrapper' => array (
+				'width' => '',
+				'class' => '',
+				'id' => '',
+			),
+			'hide_admin' => 0,
+			'choices' => array (
+				'buy_now' => 'Buy Now',
+				'pay_now' => 'Pay Now',
+			),
+			'default_value' => array (
+				0 => 'buy_now',
 			),
 			'allow_null' => 0,
 			'multiple' => 0,

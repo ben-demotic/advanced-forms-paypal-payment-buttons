@@ -174,8 +174,11 @@ class Advanced_Forms_Paypal_Payment_Buttons {
 
 		$plugin_public = new Advanced_Forms_Paypal_Payment_Buttons_Public( $this->get_plugin_name(), $this->get_version() );
 
+		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
+		$this->loader->add_action( 'af/form/attributes', $plugin_public, 'af_ppb_form_attributes', 10, 3 );
+		$this->loader->add_action( 'af/form/args', $plugin_public, 'af_ppb_form_args', 10, 2 );
 		$this->loader->add_action( 'af/form/submission', $plugin_public, 'af_ppb_form_submission', 20, 3 );
-		
+
 	}
 
 	/**

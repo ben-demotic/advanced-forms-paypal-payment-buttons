@@ -55,6 +55,26 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 	}
 
 	/**
+	 * Register the stylesheets for the public-facing side of the site.
+	 *
+	 * @since    1.0.0
+	 */
+	public function enqueue_styles() {
+		/**
+		 * This function is provided for demonstration purposes only.
+		 *
+		 * An instance of this class should be passed to the run() function
+		 * defined in Plugin_Name_Loader as all of the hooks are defined
+		 * in that particular class.
+		 *
+		 * The Plugin_Name_Loader will then create the relationship
+		 * between the defined hooks and the functions defined in this
+		 * class.
+		 */
+		wp_enqueue_style( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'css/advanced-forms-paypal-payment-buttons-public.css', array(), $this->version, 'all' );
+	}
+	
+	/**
 	 * Check/create/return temp directory (used for writing temp files)
 	 * Also create .htaccess to prevent file downloads
 	 *
@@ -77,6 +97,73 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 		
 		return $upload_dir;
 		
+	}
+
+	/**
+	 * Add span element to button submit text
+	 *
+	 * @since    1.1.1
+	 */	
+	public function af_ppb_form_args( $args, $form ) {
+		
+		$form_id = $form['post_id'];
+		
+		$button = get_field( 'field_af_ppb_button_type', $form_id );
+		
+		if ( $button && $button != 'none' ) {
+			$args['submit_text'] = '<span>' . $args['submit_text'] . '</span>';
+		}
+		
+		return $args;
+		
+	}
+	
+	/**
+	 * Adds a class to the form so we can replace the submit button with an image
+	 *
+	 * @since    1.1.1
+	 */	
+	public function af_ppb_form_attributes( $form_attributes, $form, $args ) {
+		
+		$form_id = $form['post_id'];
+		
+		$button = get_field( 'field_af_ppb_button_type', $form_id );
+		$image = get_field( 'field_af_ppb_button_image', $form_id );
+		
+		if ( $button && $button != 'none' ) {
+			if ( $button == '_xclick' ) {
+				if ( $image == 'pay_now' ) {
+					$form_attributes['class'] .= ' pay-now';
+				}
+				else {
+					$form_attributes['class'] .= ' buy-now';
+				}
+			}
+			elseif ( $button == '_donations' ) {
+				$form_attributes['class'] .= ' donate';
+			}
+		}
+		
+		return $form_attributes;
+
+	}
+
+	/**
+	 * Adds an attribution at the bottom of the form
+	 *
+	 * @since    1.1.1
+	 */		
+	public function af_ppb_after_fields( $form, $args ) {
+		
+		$form_id = $form['post_id'];
+		
+		$button = get_field( 'field_af_ppb_button_type', $form_id );
+		
+		if( $button && $button != 'none' ) {		
+		
+			include_once 'partials/advanced-forms-paypal-payment-buttons-public-attribution.php';
+			
+		}
 	}
 	
 	/**
