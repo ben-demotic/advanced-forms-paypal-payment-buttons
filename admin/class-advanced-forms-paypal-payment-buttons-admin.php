@@ -44,8 +44,8 @@ class Advanced_Forms_Paypal_Payment_Buttons_Admin {
 	 * Initialize the class and set its properties.
 	 *
 	 * @since    1.0.0
-	 * @param      string    $plugin_name       The name of this plugin.
-	 * @param      string    $version    The version of this plugin.
+	 * @param    string    $plugin_name       The name of this plugin.
+	 * @param    string    $version    The version of this plugin.
 	 */
 	public function __construct( $plugin_name, $version ) {
 
@@ -89,7 +89,7 @@ class Advanced_Forms_Paypal_Payment_Buttons_Admin {
 	/**
 	 * Add an options page under the Settings submenu using ACF options page functionality
 	 *
-	 * @since 1.1.0
+	 * @since 1.0.0
 	 */
 	public function af_ppb_add_options_page() {
 	

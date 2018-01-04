@@ -14,9 +14,9 @@
  *
  * @wordpress-plugin
  * Plugin Name:       Advanced Forms PayPal Payment Buttons
- * Plugin URI:        https://www.demotic.co.uk/plugins/advanced-forms-paypal-payment-buttons/
+ * Plugin URI:        https://www.demotic.co.uk/wordpress-plugins/advanced-forms-paypal-payment-buttons/
  * Description:       Create PayPal Payment Buttons with the power of Advanced Forms and Advanced Custom Fields.
- * Version:           1.1.1
+ * Version:           1.0.0
  * Author:            Demotic Limited
  * Author URI:        https://www.demotic.co.uk/
  * License:           GPL-2.0+

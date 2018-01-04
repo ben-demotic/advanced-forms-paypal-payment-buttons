@@ -102,7 +102,7 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 	/**
 	 * Add span element to button submit text
 	 *
-	 * @since    1.1.1
+	 * @since    1.0.0
 	 */	
 	public function af_ppb_form_args( $args, $form ) {
 		
@@ -121,7 +121,7 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 	/**
 	 * Adds a class to the form so we can replace the submit button with an image
 	 *
-	 * @since    1.1.1
+	 * @since    1.0.0
 	 */	
 	public function af_ppb_form_attributes( $form_attributes, $form, $args ) {
 		
@@ -148,24 +148,6 @@ class Advanced_Forms_Paypal_Payment_Buttons_Public {
 
 	}
 
-	/**
-	 * Adds an attribution at the bottom of the form
-	 *
-	 * @since    1.1.1
-	 */		
-	public function af_ppb_after_fields( $form, $args ) {
-		
-		$form_id = $form['post_id'];
-		
-		$button = get_field( 'field_af_ppb_button_type', $form_id );
-		
-		if( $button && $button != 'none' ) {		
-		
-			include_once 'partials/advanced-forms-paypal-payment-buttons-public-attribution.php';
-			
-		}
-	}
-	
 	/**
 	 * Runs after Advanced Forms email has been sent
 	 *

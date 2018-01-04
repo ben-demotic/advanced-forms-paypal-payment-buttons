@@ -1,9 +1,9 @@
 === Plugin Name ===
 Contributors: demotic
-Donate link: https://www.demotic.co.uk/
-Tags: af, advanced, forms, form, acf, advanced, custom, fields, flexible, developer, developer-friendly, paypal, buttons, payments
+Donate link: https://www.demotic.co.uk/wordpress-plugins/donate/
+Tags: af, advanced forms, form, acf, advanced custom fields, flexible, developer, developer-friendly, paypal, buttons, payments
 Requires at least: 3.6.0
-Tested up to: 4.8.0
+Tested up to: 4.9.1
 Stable tag: 1.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -30,30 +30,28 @@ Advanced Forms PayPal Payment Buttons supports:
 
 == Installation ==
 
-1. Make sure Advanced Custom Fields Pro v5 is installed.
+1. Make sure Advanced Custom Fields v5 is installed.
 2. Make sure Advanced Forms is installed.
-3. Upload `advanced-forms-paypal-payment-buttons.php` to the `/wp-content/plugins/` directory
+3. Upload the plugin files to the `/wp-content/plugins/advanced-forms-paypal-payment-buttons` directory
 4. Activate the plugin through the 'Plugins' menu in WordPress
 5. Configure the "PayPal Settings" in Forms > PayPal Settings.
 6. Configure your forms in Forms > Forms > Your Form > PayPal Button.
 
 == Frequently Asked Questions ==
 
-= Q: Does this plugin only work with ACF Pro v5? =
+= Q: Does this plugin only work with ACF v5? =
 
-Yes. Versions 4 or lower of ACF are not supported.
+Yes. Versions 4 or lower of ACF are not supported. 
 
 == Screenshots ==
 
-None at present.
+1. Form edit page with form settings and "PayPal Button" settings for the form.
 
 == Changelog ==
 
-= 1.1.0 =
-* Migrated settings page from Settings API to ACF options page.
-
 = 1.0.0 =
-* Initial version converted from Contact Form 7 PayPal Payment Buttons.
+
+* Initial release of Advanced Forms PayPal Payment Buttons.
 
 == Upgrade Notice ==
 
